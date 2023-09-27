@@ -120,6 +120,21 @@ class Slidable extends StatefulWidget {
     final scope = context.getElementForInheritedWidgetOfExactType<_SlidableControllerScope>()?.widget as _SlidableControllerScope?;
     return scope?.controller;
   }
+
+  /// The closest instance of the [SlidableController] which controls this
+  /// [Slidable] that encloses the given context.
+  ///
+  /// {@tool snippet}
+  /// Typical usage is as follows:
+  ///
+  /// ```dart
+  /// SlidableController controller = Slidable.of(context);
+  /// ```
+  /// {@end-tool}
+  SlidableController? ofconst(BuildContext context) {
+    final scope = context.getElementForInheritedWidgetOfExactType<_SlidableControllerScope>()?.widget as _SlidableControllerScope?;
+    return scope?.controller;
+  }
 }
 
 class _SlidableState extends State<Slidable> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
