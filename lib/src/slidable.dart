@@ -103,10 +103,6 @@ class Slidable extends StatefulWidget {
   /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget child;
 
-  /// Option to declare constructor component as Variable and access the controller
-  /// itself to manually call his functions/props
-  late SlidableController manualController;
-
   @override
   _SlidableState createState() => _SlidableState();
 
@@ -138,8 +134,6 @@ class _SlidableState extends State<Slidable> with TickerProviderStateMixin, Auto
   void initState() {
     super.initState();
     controller = SlidableController(this)..actionPaneType.addListener(handleActionPanelTypeChanged);
-
-    widget.manualController = controller;
   }
 
   @override
