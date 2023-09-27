@@ -103,6 +103,10 @@ class Slidable extends StatefulWidget {
   /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget child;
 
+  /// Option to declare constructor component as Variable and access the controller
+  /// itself to manually call his functions/props
+  late SlidableController manualController;
+
   @override
   _SlidableState createState() => _SlidableState();
 
@@ -120,21 +124,6 @@ class Slidable extends StatefulWidget {
     final scope = context.getElementForInheritedWidgetOfExactType<_SlidableControllerScope>()?.widget as _SlidableControllerScope?;
     return scope?.controller;
   }
-
-  /// The closest instance of the [SlidableController] which controls this
-  /// [Slidable] that encloses the given context.
-  ///
-  /// {@tool snippet}
-  /// Typical usage is as follows:
-  ///
-  /// ```dart
-  /// SlidableController controller = Slidable.of(context);
-  /// ```
-  /// {@end-tool}
-  SlidableController? ofconst(BuildContext context) {
-    final scope = context.getElementForInheritedWidgetOfExactType<_SlidableControllerScope>()?.widget as _SlidableControllerScope?;
-    return scope?.controller;
-  }
 }
 
 class _SlidableState extends State<Slidable> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
@@ -149,6 +138,8 @@ class _SlidableState extends State<Slidable> with TickerProviderStateMixin, Auto
   void initState() {
     super.initState();
     controller = SlidableController(this)..actionPaneType.addListener(handleActionPanelTypeChanged);
+
+    widget.manualController = controller;
   }
 
   @override
