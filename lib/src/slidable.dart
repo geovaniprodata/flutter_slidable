@@ -19,7 +19,7 @@ class Slidable extends StatefulWidget {
   ///
   /// The [enabled], [closeOnScroll], [direction], [dragStartBehavior],
   /// [useTextDirection] and [child] arguments must not be null.
-  Slidable({
+  const Slidable({
     Key? key,
     this.groupTag,
     this.enabled = true,
@@ -29,6 +29,7 @@ class Slidable extends StatefulWidget {
     this.direction = Axis.horizontal,
     this.dragStartBehavior = DragStartBehavior.down,
     this.useTextDirection = true,
+    this.controlfunction,
     required this.child,
   }) : super(key: key);
 
@@ -102,6 +103,9 @@ class Slidable extends StatefulWidget {
   ///
   /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget child;
+
+  /// TESTE
+  final Function(SlidableController)? controlfunction;
 
   @override
   _SlidableState createState() => _SlidableState();
