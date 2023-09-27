@@ -138,6 +138,12 @@ class _SlidableState extends State<Slidable> with TickerProviderStateMixin, Auto
   void initState() {
     super.initState();
     controller = SlidableController(this)..actionPaneType.addListener(handleActionPanelTypeChanged);
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (widget.controlfunction != null) {
+        widget.controlfunction!(controller);
+      }
+    });
   }
 
   @override
