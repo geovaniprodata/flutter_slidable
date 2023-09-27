@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/src/auto_close_behavior.dart';
@@ -17,7 +19,7 @@ class Slidable extends StatefulWidget {
   ///
   /// The [enabled], [closeOnScroll], [direction], [dragStartBehavior],
   /// [useTextDirection] and [child] arguments must not be null.
-  const Slidable({
+  Slidable({
     Key? key,
     this.groupTag,
     this.enabled = true,
@@ -27,6 +29,7 @@ class Slidable extends StatefulWidget {
     this.direction = Axis.horizontal,
     this.dragStartBehavior = DragStartBehavior.down,
     this.useTextDirection = true,
+    this.manualController,
     required this.child,
   }) : super(key: key);
 
@@ -101,6 +104,10 @@ class Slidable extends StatefulWidget {
   /// {@macro flutter.widgets.ProxyWidget.child}
   final Widget child;
 
+  /// Option to declare constructor component as Variable and access the controller
+  /// itself to manually call his functions/props
+  SlidableController? manualController;
+
   @override
   _SlidableState createState() => _SlidableState();
 
@@ -115,15 +122,12 @@ class Slidable extends StatefulWidget {
   /// ```
   /// {@end-tool}
   static SlidableController? of(BuildContext context) {
-    final scope = context
-        .getElementForInheritedWidgetOfExactType<_SlidableControllerScope>()
-        ?.widget as _SlidableControllerScope?;
+    final scope = context.getElementForInheritedWidgetOfExactType<_SlidableControllerScope>()?.widget as _SlidableControllerScope?;
     return scope?.controller;
   }
 }
 
-class _SlidableState extends State<Slidable>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _SlidableState extends State<Slidable> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late final SlidableController controller;
   late Animation<Offset> moveAnimation;
   late bool keepPanesOrder;
@@ -134,8 +138,11 @@ class _SlidableState extends State<Slidable>
   @override
   void initState() {
     super.initState();
-    controller = SlidableController(this)
-      ..actionPaneType.addListener(handleActionPanelTypeChanged);
+    controller = SlidableController(this)..actionPaneType.addListener(handleActionPanelTypeChanged);
+
+    if (widget.manualController != null) {
+      widget.manualController = controller;
+    }
   }
 
   @override
@@ -172,9 +179,7 @@ class _SlidableState extends State<Slidable>
 
   void updateIsLeftToRight() {
     final textDirection = Directionality.of(context);
-    controller.isLeftToRight = widget.direction == Axis.vertical ||
-        !widget.useTextDirection ||
-        textDirection == TextDirection.ltr;
+    controller.isLeftToRight = widget.direction == Axis.vertical || !widget.useTextDirection || textDirection == TextDirection.ltr;
   }
 
   void handleActionPanelTypeChanged() {
@@ -194,9 +199,7 @@ class _SlidableState extends State<Slidable>
     moveAnimation = controller.animation.drive(
       Tween<Offset>(
         begin: Offset.zero,
-        end: widget.direction == Axis.horizontal
-            ? Offset(end, 0)
-            : Offset(0, end),
+        end: widget.direction == Axis.horizontal ? Offset(end, 0) : Offset(0, end),
       ),
     );
   }
@@ -270,8 +273,7 @@ class _SlidableState extends State<Slidable>
             child: ActionPaneConfiguration(
               alignment: actionPaneAlignment,
               direction: widget.direction,
-              isStartActionPane:
-                  controller.actionPaneType.value == ActionPaneType.start,
+              isStartActionPane: controller.actionPaneType.value == ActionPaneType.start,
               child: _SlidableControllerScope(
                 controller: controller,
                 child: content,
