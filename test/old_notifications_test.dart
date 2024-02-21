@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/src/controller.dart';
 import 'package:flutter_slidable/src/notifications_old.dart';
@@ -207,9 +209,7 @@ void main() {
       expect(controllers[1].ratio, 0);
     });
 
-    testWidgets(
-        'when opening more than one slidables at the same time, only the last one stays open',
-        (tester) async {
+    testWidgets('when opening more than one slidables at the same time, only the last one stays open', (tester) async {
       final controllers = List.generate(
         4,
         (index) => SlidableController(const TestVSync()),

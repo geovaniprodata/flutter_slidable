@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/src/controller.dart';
 import 'package:flutter_slidable/src/gesture_detector.dart';
@@ -130,13 +129,10 @@ void main() {
       expect(slidableController.ratio, 0);
     });
 
-    testWidgets('handleEndGesture should be called with the correct direction',
-        (tester) async {
+    testWidgets('handleEndGesture should be called with the correct direction', (tester) async {
       double? ratio = 0;
-      when(() => mockSlidableController.ratio)
-          .thenAnswer((realInvocation) => ratio!);
-      when(() => mockSlidableController.ratio = any())
-          .thenAnswer((realInvocation) {
+      when(() => mockSlidableController.ratio).thenAnswer((realInvocation) => ratio!);
+      when(() => mockSlidableController.ratio = any()).thenAnswer((realInvocation) {
         ratio = realInvocation.positionalArguments[0] as double?;
         return ratio!;
       });

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use_from_same_package
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';

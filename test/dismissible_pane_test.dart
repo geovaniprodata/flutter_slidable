@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/src/action_pane_motions.dart';
 import 'package:flutter_slidable/src/actions.dart';
@@ -149,9 +148,7 @@ void main() {
       expect(dismissed, isTrue);
     });
 
-    testWidgets(
-        'startActionPane cannot be drag dismissed if dragDismissible is false',
-        (tester) async {
+    testWidgets('startActionPane cannot be drag dismissed if dragDismissible is false', (tester) async {
       bool dismissed = false;
       void handleDismissed() {
         dismissed = true;
@@ -199,9 +196,7 @@ void main() {
       expect(dismissed, isFalse);
     });
 
-    testWidgets(
-        'when the drag is not past the dismissThreshold, the Slidable stays open',
-        (tester) async {
+    testWidgets('when the drag is not past the dismissThreshold, the Slidable stays open', (tester) async {
       bool dismissed = false;
       void handleDismissed() {
         dismissed = true;

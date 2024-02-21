@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 // ignore_for_file: public_member_api_docs
 
 class FlexEntranceTransition extends MultiChildRenderObjectWidget {
-  FlexEntranceTransition({
+  const FlexEntranceTransition({
     Key? key,
     required this.mainAxisPosition,
     required this.direction,
@@ -32,8 +32,7 @@ class FlexEntranceTransition extends MultiChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, _RenderFlexEntranceTransition renderObject) {
+  void updateRenderObject(BuildContext context, _RenderFlexEntranceTransition renderObject) {
     renderObject
       ..mainAxisPosition = mainAxisPosition
       ..direction = direction
@@ -47,10 +46,8 @@ class _FlexEntranceTransitionParentData extends FlexParentData {
 
 class _RenderFlexEntranceTransition extends RenderBox
     with
-        ContainerRenderObjectMixin<RenderBox,
-            _FlexEntranceTransitionParentData>,
-        RenderBoxContainerDefaultsMixin<RenderBox,
-            _FlexEntranceTransitionParentData> {
+        ContainerRenderObjectMixin<RenderBox, _FlexEntranceTransitionParentData>,
+        RenderBoxContainerDefaultsMixin<RenderBox, _FlexEntranceTransitionParentData> {
   _RenderFlexEntranceTransition({
     List<RenderBox>? children,
     Axis direction = Axis.horizontal,
@@ -211,8 +208,7 @@ class _RenderFlexEntranceTransition extends RenderBox
     // The x, y parameters have the top left of the node's box as the origin.
     RenderBox? child = startToEnd ? firstChild : lastChild;
     while (child != null) {
-      final childParentData =
-          child.parentData as _FlexEntranceTransitionParentData?;
+      final childParentData = child.parentData as _FlexEntranceTransitionParentData?;
       final bool isHit = result.addWithPaintOffset(
         offset: childParentData!.offset,
         position: position,
@@ -224,9 +220,7 @@ class _RenderFlexEntranceTransition extends RenderBox
       if (isHit) {
         return true;
       }
-      child = startToEnd
-          ? childParentData.nextSibling
-          : childParentData.previousSibling;
+      child = startToEnd ? childParentData.nextSibling : childParentData.previousSibling;
     }
 
     return false;
@@ -236,13 +230,10 @@ class _RenderFlexEntranceTransition extends RenderBox
   void paint(PaintingContext context, Offset offset) {
     RenderBox? child = startToEnd ? lastChild : firstChild;
     while (child != null) {
-      final childParentData =
-          child.parentData as _FlexEntranceTransitionParentData?;
+      final childParentData = child.parentData as _FlexEntranceTransitionParentData?;
       context.paintChild(child, childParentData!.offset + offset);
 
-      child = startToEnd
-          ? childParentData.previousSibling
-          : childParentData.nextSibling;
+      child = startToEnd ? childParentData.previousSibling : childParentData.nextSibling;
     }
   }
 }

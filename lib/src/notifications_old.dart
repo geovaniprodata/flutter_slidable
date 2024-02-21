@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:flutter/widgets.dart';
 
 import 'controller.dart';
@@ -38,10 +40,7 @@ class SlidableNotification {
   /// [SlidableNotificationListener] widget.
   /// If the [BuildContext] is null, the notification is not dispatched.
   void dispatch(BuildContext context, SlidableController controller) {
-    final scope = context
-        .getElementForInheritedWidgetOfExactType<
-            _SlidableNotificationListenerScope>()
-        ?.widget as _SlidableNotificationListenerScope?;
+    final scope = context.getElementForInheritedWidgetOfExactType<_SlidableNotificationListenerScope>()?.widget as _SlidableNotificationListenerScope?;
 
     scope?.state.acceptNotification(controller, this);
   }
@@ -79,9 +78,7 @@ class SlidableRatioNotification extends SlidableNotification {
 
   @override
   bool operator ==(Object other) {
-    return super == other &&
-        other is SlidableRatioNotification &&
-        other.ratio == ratio;
+    return super == other && other is SlidableRatioNotification && other.ratio == ratio;
   }
 
   @override
@@ -124,14 +121,11 @@ class SlidableNotificationListener extends StatefulWidget {
   final bool autoClose;
 
   @override
-  _SlidableNotificationListenerState createState() =>
-      _SlidableNotificationListenerState();
+  _SlidableNotificationListenerState createState() => _SlidableNotificationListenerState();
 }
 
-class _SlidableNotificationListenerState
-    extends State<SlidableNotificationListener> {
-  final Map<Object?, SlidableController> openControllers =
-      <Object?, SlidableController>{};
+class _SlidableNotificationListenerState extends State<SlidableNotificationListener> {
+  final Map<Object?, SlidableController> openControllers = <Object?, SlidableController>{};
 
   void acceptNotification(
     SlidableController controller,
@@ -181,8 +175,7 @@ class _SlidableNotificationListenerScope extends InheritedWidget {
   final _SlidableNotificationListenerState state;
 
   @override
-  bool updateShouldNotify(
-      covariant _SlidableNotificationListenerScope oldWidget) {
+  bool updateShouldNotify(covariant _SlidableNotificationListenerScope oldWidget) {
     return oldWidget.state != state;
   }
 }
@@ -203,21 +196,16 @@ class SlidableNotificationSender extends StatefulWidget {
   final Widget child;
 
   @override
-  _SlidableNotificationSenderState createState() =>
-      _SlidableNotificationSenderState();
+  _SlidableNotificationSenderState createState() => _SlidableNotificationSenderState();
 }
 
-class _SlidableNotificationSenderState
-    extends State<SlidableNotificationSender> {
+class _SlidableNotificationSenderState extends State<SlidableNotificationSender> {
   _SlidableNotificationListenerState? listenerState;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final state = context
-        .dependOnInheritedWidgetOfExactType<
-            _SlidableNotificationListenerScope>()
-        ?.state;
+    final state = context.dependOnInheritedWidgetOfExactType<_SlidableNotificationListenerScope>()?.state;
     if (state != listenerState) {
       if (state == null) {
         removeListeners();
