@@ -76,7 +76,7 @@ class ActionPane extends StatefulWidget {
   /// A listenable function which will be called when the Slidable is dragged.
   ///
   /// Defaults to null
-  final Function({bool isOpened})? onSlide;
+  final Function(bool)? onSlide;
 
   /// The fraction of the total extent from where the [Slidable] will
   /// automatically open when the drag end.
@@ -183,7 +183,7 @@ class _ActionPaneState extends State<ActionPane> implements RatioConfigurator {
         // If the dismissible is not ready, the animation will stop.
         // So we prefere to open the action pane instead.
         controller!.openCurrentActionPane();
-        widget.onSlide?.call(isOpened: true);
+        widget.onSlide?.call(true);
       }
       return;
     }
@@ -191,13 +191,13 @@ class _ActionPaneState extends State<ActionPane> implements RatioConfigurator {
     if ((gesture is OpeningGesture && openThreshold <= extentRatio) ||
         gesture is StillGesture && ((gesture.opening && position >= openThreshold) || gesture.closing && position > closeThreshold)) {
       controller!.openCurrentActionPane();
-      widget.onSlide?.call(isOpened: true);
+      widget.onSlide?.call(true);
       return;
     }
 
     // Otherwise we close the the Slidable.
     controller!.close();
-    widget.onSlide?.call(isOpened: false);
+    widget.onSlide?.call(false);
   }
 
   void handleRatioChanged() {
